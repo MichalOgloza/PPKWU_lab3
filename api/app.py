@@ -9,10 +9,12 @@ def home():
     return "Hello World!"
 
 
-@app.route('/calendar')
-def get_calendar():
-    return requests\
-        .get('http://www.weeia.p.lodz.pl/pliki_strony_kontroler/kalendarz.php?rok=2020&miesiac=10&lang=1').content
+@app.route('/calendar/<year>/<month>')
+def get_calendar(year, month):
+    lang = 1
+    url = 'http://www.weeia.p.lodz.pl/pliki_strony_kontroler/kalendarz.php?rok={year}&miesiac={month}&lang={lang}'\
+        .format(year=year, month=month, lang=lang)
+    return requests.get(url).content
 
 
 if __name__ == '__main__':
