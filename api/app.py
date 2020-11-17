@@ -6,7 +6,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Hello World!"
+    return "This API returns ICS/iCal version of calendar available on http://www.weeia.p.lodz.pl. " \
+           "Available at address: /calendar/[year]/[month]"
 
 
 @app.route('/calendar/<year>/<month>')
