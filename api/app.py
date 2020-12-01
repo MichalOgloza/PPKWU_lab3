@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests
 import arrow
 from flask import Flask
@@ -13,6 +15,11 @@ app = Flask(__name__)
 def home():
     return "This API returns ICS/iCal version of calendar available on http://www.weeia.p.lodz.pl. " \
            "Available at address: /calendar/[year]/[month]"
+
+
+@app.route('/calendar/current')
+def get_current_calendar():
+    return get_calendar(datetime.now().year, datetime.now().month)
 
 
 @app.route('/calendar/<year>/<month>')
