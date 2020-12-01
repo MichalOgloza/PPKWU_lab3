@@ -2,6 +2,7 @@ import requests
 import arrow
 from flask import Flask
 from bs4 import BeautifulSoup
+from ics import Calendar, Event
 
 from event_model import EventModel
 
@@ -19,7 +20,23 @@ def get_calendar(year, month):
     lang = 1
     url = 'http://www.weeia.p.lodz.pl/pliki_strony_kontroler/kalendarz.php?rok={year}&miesiac={month}&lang={lang}'\
         .format(year=year, month=month, lang=lang)
-    return requests.get(url).content
+
+    cal = create_calendar(get_events(url, year, month))
+    cal = Calendar()
+    print(cal)
+    return str(cal)
+
+
+def create_calendar(events):
+    cal = Calendar()
+    for event in events:
+        ev = Event()
+        ev.name = event.name
+        ev.begin = event.date
+        ev.created = arrow.utcnow()
+        ev.make_all_day()
+        cal.events.add(ev)
+    return cal
 
 
 def get_events(url, year, month):
