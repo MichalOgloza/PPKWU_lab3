@@ -22,9 +22,8 @@ def get_calendar(year, month):
         .format(year=year, month=month, lang=lang)
 
     cal = create_calendar(get_events(url, year, month))
-    cal = Calendar()
     print(cal)
-    return str(cal)
+    return cal.__str__()
 
 
 def create_calendar(events):
@@ -34,6 +33,7 @@ def create_calendar(events):
         ev.name = event.name
         ev.begin = event.date
         ev.created = arrow.utcnow()
+        ev.description = event.link
         ev.make_all_day()
         cal.events.add(ev)
     return cal
