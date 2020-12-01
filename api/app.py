@@ -60,8 +60,10 @@ def get_events(url, year, month):
 
         date_string = '{year}-{month}-{day}'.format(year=year, month=month, day=day)
         date = arrow.get(date_string, 'YYYY-MM-DD')
-
-        event = EventModel(name, date, link.get('href'))
+        href = link.get('href')
+        if href == "javascript:void();":
+            href = ""
+        event = EventModel(name, date, href)
         events.append(event)
 
     return events
